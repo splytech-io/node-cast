@@ -1,6 +1,6 @@
 {
   "name": "@splytech-io/cast",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Cast documents",
   "main": "index",
   "typings": "index.d",
@@ -10,7 +10,7 @@
     "lint:fix": "tslint --project . --fix",
     "build": "tsc",
     "prepush": "npm run lint",
-    "prepublish": "npm run lint && npm run test && npm run build"
+    "prepublishOnly": "npm run lint && npm run test && npm run build"
   },
   "keywords": [
     "mongodb",
@@ -18,7 +18,7 @@
     "cast"
   ],
   "author": "Andrius Skerla",
-  "license": "ISC",
+  "license": "Apache-2.0",
   "dependencies": {
     "@types/flat": "0.0.28",
     "@types/lodash": "^4.14.106",
