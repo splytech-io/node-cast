@@ -3,7 +3,10 @@ import { castDocument, castFilter } from './index';
 
 describe('tests', () => {
   class ObjectId {
-    constructor(public id: string) {
+    public id: string;
+
+    constructor(id: string) {
+      this.id = id;
     }
   }
 
@@ -129,7 +132,7 @@ describe('tests', () => {
       const result = castFilter({
         $and: [{
           'one': '2017',
-          $or: [{
+          '$or': [{
             _id: '1',
           }, {
             _id: '2',
