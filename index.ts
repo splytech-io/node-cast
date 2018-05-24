@@ -7,6 +7,13 @@ export interface DefinitionsSchema {
   [key: string]: Constructor;
 }
 
+const MONGODB_SPECIAL_OPERATORS = [
+  '$and',
+  '$or',
+  '$in',
+  '$nin',
+];
+
 /**
  *
  * @param {object} body
@@ -46,6 +53,12 @@ export function castFilter<T>(body: T, schema: DefinitionsSchema): T {
   const paths = Object.keys(body);
 
   for (const path of paths) {
+    if (MONGODB_SPECIAL_OPERATORS.includes(path)) {
+      result[path] = (<any>body)[path].map((value: any) => castFilter(value, schema));
+
+      continue;
+    }
+
     const value = (<any>body)[path];
     const constructor = schema[path];
 
