@@ -154,5 +154,46 @@ describe('tests', () => {
         }],
       });
     });
+    it('should process $eq and $ne correctly', () => {
+      const result = castFilter({
+        'references.partner_ids': {
+          '$or': [
+            { '$eq': '5a81a609b1896756c1288f48' },
+            { '$ne': ['5a81a609b1896756c1288f48'] },
+          ],
+        },
+      }, {
+          'references.partner_ids': ObjectId,
+        });
+
+      expect(result).to.deep.equals({
+        'references.partner_ids': {
+          '$or': [
+            { '$eq': new ObjectId('5a81a609b1896756c1288f48') },
+            { '$ne': [new ObjectId('5a81a609b1896756c1288f48')] },
+          ],
+        },
+      });
+    });
+    it('should process $lte, $gte correctly', () => {
+      const result = castFilter({
+        '$and': [
+          { 'created': { '$lte': '2018-03-31T22:59:59.999Z', '$gte': '2018-03-01T00:00:00.000Z' } },
+        ],
+      }, {
+          'created': Date,
+        });
+
+      expect(result).to.deep.equals({
+        '$and': [
+          {
+            'created': {
+              '$lte': new Date('2018-03-31T22:59:59.999Z'),
+              '$gte': new Date('2018-03-01T00:00:00.000Z'),
+            },
+          },
+        ],
+      });
+    });
   });
 });
