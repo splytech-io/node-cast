@@ -54,6 +54,13 @@ describe('tests', () => {
         created: Date,
       }).created).to.instanceOf(Date);
     });
+    it('should cast date when null is provided', () => {
+      expect(castFilter({
+        'created': null,
+      }, {
+        created: Date,
+      }).created).to.be.a('null');
+    });
     it('should not cast other values', () => {
       expect(castFilter({
         'property.date': '2017',

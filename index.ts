@@ -81,6 +81,10 @@ export function castFilter<T>(body: T, schema: DefinitionsSchema): T {
  * @returns {any}
  */
 export function castValue(value: any, constructor: Constructor): any {
+  if (value === null) {
+    return value;
+  }
+
   if (Array.isArray(value)) {
     return value.map((item) => castValue(item, constructor));
   }
