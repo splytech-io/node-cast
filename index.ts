@@ -1,5 +1,6 @@
 import flatten = require('flat');
-import _ = require('lodash');
+import get = require('lodash.get');
+import set = require('lodash.set');
 
 export type Constructor = new (value: any) => any;
 
@@ -27,15 +28,15 @@ export function castDocument<T>(body: T, schema: DefinitionsSchema): T {
   }));
 
   for (const path of paths) {
-    const originalValue = _.get(body, path);
+    const originalValue = get(body, path);
     const constructor = schema[path];
 
     if (!constructor) {
-      _.set(result, path, originalValue);
+      set(result, path, originalValue);
     } else if (Array.isArray(originalValue)) {
-      _.set(result, path, originalValue.map((item) => new constructor(item)));
+      set(result, path, originalValue.map((item) => new constructor(item)));
     } else {
-      _.set(result, path, new constructor(originalValue));
+      set(result, path, new constructor(originalValue));
     }
   }
 
